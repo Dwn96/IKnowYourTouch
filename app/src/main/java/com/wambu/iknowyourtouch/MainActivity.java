@@ -2,6 +2,7 @@ package com.wambu.iknowyourtouch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -11,27 +12,33 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener, View.OnTouchListener {
 
-    private Button bigRedButton;
+
+    RelativeLayout relativeLayout;
     private GestureDetector mGestureDetector;
     Context context= this;
     MediaPlayer mp;
 
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-     bigRedButton=findViewById(R.id.push_btn);
 
 
-        bigRedButton.setOnTouchListener(this);
+        relativeLayout = findViewById(R.id.relativeLayout);
+        relativeLayout.setOnTouchListener(this);
+
+
+
         mGestureDetector = new GestureDetector(this,this);
 
 
@@ -53,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onDoubleTap(MotionEvent e) {
         mp = MediaPlayer.create(context, R.raw.doubletap);
-        Toast.makeText(this,"You've double tapped me",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"You double tapped me!",Toast.LENGTH_SHORT).show();
         try {
             if (mp.isPlaying()) {
                 mp.stop();
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public void onLongPress(MotionEvent e) {
         mp= MediaPlayer.create(context,R.raw.longpress);
-        Toast.makeText(this,"You've long pressed me",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"You long pressed me!",Toast.LENGTH_SHORT).show();
         try{
             if (mp.isPlaying()){
                 mp.stop();
@@ -113,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        if(view.getId() == R.id.push_btn){
+        if(view.getId() == R.id.relativeLayout){
             //methods for touching button
             mGestureDetector.onTouchEvent(event);
             return true;
